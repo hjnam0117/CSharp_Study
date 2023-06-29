@@ -15,6 +15,14 @@ namespace WhileTest
             {
                 Console.WriteLine(i);
             }
+            // 1 ~ 100 중 짝수를 출력하라
+            for (int j=2; j<=100; j++)
+            {
+                if(j%2 == 0)
+                {
+                    Console.WriteLine(j);
+                }
+            }
         }
     }
 }
