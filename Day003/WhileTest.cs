@@ -11,9 +11,9 @@ namespace WhileTest
         static void Main(string[] args)
         {
             // 100 ~ 1 모두 1씩 마이너스 되면서 출력하라
-            for(int i=0; i<100; i++)
+            for(int i=100; i>0; i--)
             {
-                Console.WriteLine(100 - i);
+                Console.WriteLine(i);
             }
         }
     }
