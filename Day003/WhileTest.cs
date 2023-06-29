@@ -23,6 +23,17 @@ namespace WhileTest
                     Console.WriteLine(j);
                 }
             }
+
+            // 1 ~ 100 중 홀수를 출력하라
+            int k = 0;
+            while (k < 100)
+            {
+                if (k%2 != 0)
+                {
+                    Console.WriteLine(k);
+                }
+                k++;
+            }
         }
     }
 }
