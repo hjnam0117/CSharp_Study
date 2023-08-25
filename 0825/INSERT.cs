@@ -23,10 +23,10 @@ namespace EntityFrameworkApp01
 {
     public class Student
     {
-        public int No { get; set; }
-        public string Name { get; set; }
-        public string Major { get; set; }
-        public string Hometown { get; set; }
+        public int NO { get; set; }
+        public string NAME { get; set; }
+        public string MAJOR { get; set; }
+        public string HOMTOWN { get; set; }
     }
     public class StudentContext : DbContext
     {
@@ -36,37 +36,44 @@ namespace EntityFrameworkApp01
         {
             optionsBuilder.UseOracle("User Id=c##scott;Password=tiger;Data Source=127.0.0.1/XE;");
         }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Student>()   //Primary key 지정
-                .HasKey(p => p.No);
+                .HasKey(p => p.NO);
 
             modelBuilder.Entity<Student>()   //Varchar2(20) 20크기를 정할 때
-                .Property(p => p.Name)
+                .Property(p => p.NAME)
                 .HasMaxLength(20);
 
             modelBuilder.Entity<Student>()
-                .Property(p => p.Major)
+                .Property(p => p.MAJOR)
                 .HasMaxLength(20);
 
             modelBuilder.Entity<Student>()
-                .Property(p => p.Hometown)
+                .Property(p => p.HOMTOWN)
                 .HasMaxLength(20);
         }
     }
-
     internal class Program
     {
         static void Main(string[] args)
         {
             using (var context = new StudentContext())
             {
-                // 데이터베이스와 테이블 생성
-                //context.Database.EnsureDeleted(); //기존의 테이블이 있을경우 삭제를 단행하는데 DB자체를 지우는 명령어라 타 테이블도 삭제됩니다.
-                //조심해서 사용해야할 필요가 있습니다.
-                context.Database.EnsureCreated();   //테이블 또는 DB를 만드는 명령어인데 기존에 존재하는 파일이 있다면 아무 작업도 하지 않습니다.
-                Console.WriteLine("데이터베이스 테이블이 생성되었습니다.");
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated(); //테이블이 있다면 아무 동작도 하지 않습니다.
+                // 데이터 삽입
+                var students = new List<Student>
+                {
+                    new Student { NO = 100, NAME = "홍길동", MAJOR = "컴공", HOMTOWN = "안동" },
+                    new Student { NO = 200, NAME = "이순신", MAJOR = "정통", HOMTOWN = "통영" },
+                    new Student { NO = 300, NAME = "강감찬", MAJOR = "기계", HOMTOWN = "개성" },
+                    new Student { NO = 400, NAME = "을지문덕", MAJOR = "멀티", HOMTOWN = "서울" }
+                };
+
+                context.Student.AddRange(students);
+                context.SaveChanges();
+                Console.WriteLine("데이터 삽입 성공!");
             }
         }
     }
